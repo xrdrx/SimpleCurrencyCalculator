@@ -18,6 +18,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet var sourcePicker: UIPickerView!
     @IBOutlet var goalPicker: UIPickerView!
     
+    @IBAction func amountToConvertChanged() {
+        convert()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,8 +39,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         //tap.cancelsTouchesInView = false
 
         view.addGestureRecognizer(tap)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-
+        //select RUB to EUR as defaults
+        sourcePicker.selectRow(26, inComponent: 0, animated: false)
+        goalPicker.selectRow(8, inComponent: 0, animated: false)
+        convertFrom = ExchangeRate.currencies[26]
+        convertTo = ExchangeRate.currencies[8]
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

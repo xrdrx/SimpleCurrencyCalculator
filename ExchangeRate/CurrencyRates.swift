@@ -21,7 +21,7 @@ struct ExchangeRate: Codable {
     
     static var exchangeRates: [String: ExchangeRate] = [:]
     
-    static let currencies: [String] = ["AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "GBP", "HKD", "HRK", "HUF", "IDR", "ILS", "INR", "ISK", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PLN", "RON", "RUB", "SEK", "SGD", "THB", "TRY", "USD", "ZAR"]
+    static let currencies: [String] = ["AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HRK", "HUF", "IDR", "ILS", "INR", "ISK", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PLN", "RON", "RUB", "SEK", "SGD", "THB", "TRY", "USD", "ZAR"]
     
     static let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
@@ -59,7 +59,6 @@ struct ExchangeRate: Codable {
                     self.exchangeRates[currency] = rate
                 } else {
                     print("Error getting currency exchange rate")
-                    self.exchangeRates[currency] = nil
                 }
             }
                 task.resume()
