@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct SaverLoader {
     
@@ -19,6 +20,18 @@ struct SaverLoader {
     func saveRates(_ rates: ExchangeRates, to file: URL) {
         if let data = try? JSONEncoder().encode(rates) {
             try? data.write(to: file)
+        }
+    }
+    
+    func saveExchangeRates(for controller: ViewController) {
+        guard let rates = controller.exchangeRates else { return }
+        saveRates(rates, to: exchangeRatesFileUrl)
+    }
+    
+    func loadExchangeRates(for controller: ViewController) {
+        controller.exchangeRates = loadRates(from: exchangeRatesFileUrl)
+        loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases, update: controller.exchangeRates) { (rates) in
+            controller.exchangeRates = rates
         }
     }
     

@@ -29,11 +29,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        exchangeRates = saverLoader.loadRates(from: exchangeRatesFileUrl)
-        saverLoader.loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases, update: exchangeRates) { (rates) in
-            self.exchangeRates = rates
-        }
-            
+        saverLoader.loadExchangeRates(for: self)
         
         sourcePicker.dataSource = self
         sourcePicker.delegate = self
