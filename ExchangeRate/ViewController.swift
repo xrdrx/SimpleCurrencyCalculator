@@ -10,6 +10,10 @@ import UIKit
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
+    var exchangeRates: ExchangeRates?
+    let saverLoader = SaverLoader()
+    let converter = Converter()
+    
     var convertFrom: String?
     var convertTo: String?
 
@@ -25,8 +29,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ExchangeRate.loadRates()
-        ExchangeRate.loadRemoteRates()
+        exchangeRates = saverLoader.loadRates(from: exchangeRatesFileUrl)
+        saverLoader.loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases, update: exchangeRates) { (rates) in
+            self.exchangeRates = rates
+        }
+            
         
         sourcePicker.dataSource = self
         sourcePicker.delegate = self
@@ -45,10 +52,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         super.viewWillAppear(animated)
         
         //select RUB to EUR as defaults
-        sourcePicker.selectRow(26, inComponent: 0, animated: false)
-        goalPicker.selectRow(8, inComponent: 0, animated: false)
-        convertFrom = ExchangeRate.currencies[26]
-        convertTo = ExchangeRate.currencies[8]
+        sourcePicker.selectRow(Currency.allCases.firstIndex(of: .RUB)!, inComponent: 0, animated: false)
+        goalPicker.selectRow(Currency.allCases.firstIndex(of: .EUR)!, inComponent: 0, animated: false)
+        convertFrom = Currency.RUB.rawValue
+        convertTo = Currency.EUR.rawValue
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -56,19 +63,19 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            return ExchangeRate.currencies.count
+        return Currency.allCases.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            return ExchangeRate.currencies[row]
+        return Currency.allCases[row].rawValue
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerView {
         case sourcePicker:
-            convertFrom = ExchangeRate.currencies[row]
+            convertFrom = Currency.allCases[row].rawValue
         case goalPicker:
-            convertTo = ExchangeRate.currencies[row]
+            convertTo = Currency.allCases[row].rawValue
         default:
             return
         }
@@ -82,21 +89,41 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func convert() {
-        guard let text = amountToConvert.text,
-            let convertTo = convertTo,
-            let convertFrom = convertFrom,
-            let amountInDouble = Double(text),
-            let rate = ExchangeRate.exchangeRates[convertFrom]?.rates[convertTo] else { return }
+        if let from = convertFrom, let to = convertTo {
+            resultAmount.text = converter.convert(amountToConvert.text, exchangeRates?.rates[from]?.rates[to], formatter: NumberFormatter())
+        }
+    }
+ 
+    // MARK: App State Restoration
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
         
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 2
+        coder.encode(convertFrom, forKey: "convertFrom")
+        coder.encode(convertTo, forKey: "converTo")
+        coder.encode(sourcePicker.selectedRow(inComponent: 0), forKey: "sourcePickerSelectedRow")
+        coder.encode(goalPicker.selectedRow(inComponent: 0), forKey: "goalPickerSelectedRow")
+        coder.encode(amountToConvert.text, forKey: "amountToConvert")
         
-        let amount: Decimal = NSNumber(floatLiteral: amountInDouble).decimalValue
-        let exchangeRate: Decimal = NSNumber(floatLiteral: rate).decimalValue
-        let result = amount * exchangeRate
+        print("items encoded")
         
-        resultAmount.text = formatter.string(from: result as NSDecimalNumber)
     }
     
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+        
+        let convertFrom = coder.decodeObject(forKey: "convertFrom") as! String
+        let convertTo = coder.decodeObject(forKey: "convertTo") as! String
+        let sourcePickerSelectedRow = coder.decodeInteger(forKey: "sourcePickerSelectedRow")
+        let goalPickerSelecterRow = coder.decodeInteger(forKey: "goalPickerSelectedRow")
+        let amountToConvert = coder.decodeObject(forKey: "amountToConvert") as! String
+        
+        self.convertFrom = convertFrom
+        self.convertTo = convertTo
+        self.sourcePicker.selectRow(sourcePickerSelectedRow, inComponent: 0, animated: false)
+        self.goalPicker.selectRow(goalPickerSelecterRow, inComponent: 0, animated: false)
+        self.amountToConvert.text = amountToConvert
+        
+    }
 }
 
