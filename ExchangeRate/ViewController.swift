@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
     var exchangeRates: ExchangeRates?
-    let saverLoader = SaverLoader()
+    let saverLoader = DataManager()
     let converter = Converter()
     
     var convertFrom: String?

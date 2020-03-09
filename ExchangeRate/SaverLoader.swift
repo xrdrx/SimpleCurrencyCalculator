@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct SaverLoader {
+struct DataManager {
     
     func loadRates(from file: URL) -> ExchangeRates? {
         guard let data = try? Data(contentsOf: file) else { return nil }
@@ -23,8 +23,7 @@ struct SaverLoader {
         }
     }
     
-    func saveExchangeRates(for controller: ViewController) {
-        guard let rates = controller.exchangeRates else { return }
+    func saveExchangeRates(_ rates: ExchangeRates) {
         saveRates(rates, to: exchangeRatesFileUrl)
     }
     

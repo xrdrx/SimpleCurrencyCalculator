@@ -45,8 +45,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        guard let mainViewController = self.window?.rootViewController as? ViewController else { return }
-        mainViewController.saverLoader.saveExchangeRates(for: mainViewController)
+        guard let mainVC = self.window?.rootViewController as? ViewController else { return }
+        guard let rates = mainVC.exchangeRates else { return }
+        mainVC.saverLoader.saveExchangeRates(rates)
         print("Rates saved")
         
     }
