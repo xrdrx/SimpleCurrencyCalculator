@@ -8,20 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, CurrencySelectTableViewControllerDelegate {
 
     var exchangeRates: ExchangeRates?
     let saverLoader = DataManager()
     let converter = Converter()
     
-    var convertFrom: String?
-    var convertTo: String?
+    var convertFrom: Currency?
+    var convertTo: Currency?
 
     @IBOutlet var amountToConvert: UITextField!
     @IBOutlet var resultAmount: UILabel!
-    @IBOutlet var sourcePicker: UIPickerView!
-    @IBOutlet var goalPicker: UIPickerView!
-    
+
     @IBAction func amountToConvertChanged() {
         convert()
     }
@@ -30,11 +28,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         super.viewDidLoad()
         
         saverLoader.loadExchangeRates(for: self)
-        
-        sourcePicker.dataSource = self
-        sourcePicker.delegate = self
-        goalPicker.dataSource = self
-        goalPicker.delegate = self
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
 
@@ -48,35 +41,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         super.viewWillAppear(animated)
         
         //select RUB to EUR as defaults
-        sourcePicker.selectRow(Currency.allCases.firstIndex(of: .RUB)!, inComponent: 0, animated: false)
-        goalPicker.selectRow(Currency.allCases.firstIndex(of: .EUR)!, inComponent: 0, animated: false)
-        convertFrom = Currency.RUB.rawValue
-        convertTo = Currency.EUR.rawValue
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Currency.allCases.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Currency.allCases[row].rawValue
-    }
-
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        switch pickerView {
-        case sourcePicker:
-            convertFrom = Currency.allCases[row].rawValue
-        case goalPicker:
-            convertTo = Currency.allCases[row].rawValue
-        default:
-            return
-        }
-        
-        convert()
+        convertFrom = Currency.RUB
+        convertTo = Currency.EUR
     }
     
     @objc func dismissKeyboard() {
@@ -86,40 +52,78 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func convert() {
         if let from = convertFrom, let to = convertTo {
-            resultAmount.text = converter.convert(amountToConvert.text, exchangeRates?.rates[from]?.rates[to], formatter: NumberFormatter())
+            resultAmount.text = converter.convert(amountToConvert.text, exchangeRates?.rates[from.rawValue]?.rates[to.rawValue], formatter: NumberFormatter())
         }
+    }
+    
+    func updateSelectedCurrencies() {
+        
+    }
+    
+    func didSelect(currency: Currency, type selection: String) {
+        switch selection {
+        case "convertTo":
+            self.convertTo = currency
+            print("Converting to \(self.convertTo!.rawValue)")
+        case "convertFrom":
+            self.convertFrom = currency
+            print("Converting from \(self.convertFrom!.rawValue)")
+        default:
+            return
+        }
+        updateSelectedCurrencies()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationViewController = segue.destination as? CurrencySelectTableViewController
+        if segue.identifier == "ConvertTo" {
+            destinationViewController?.selectionType = "convertTo"
+            if let currency = self.convertTo {
+                destinationViewController?.currency = currency
+            }
+        }
+        if segue.identifier == "ConvertFrom" {
+            destinationViewController?.selectionType = "convertFrom"
+            if let currency = self.convertFrom {
+                destinationViewController?.currency = currency
+            }
+        }
+        destinationViewController?.delegate = self
+    }
+    
+    @IBAction func unwindFromCurrencySelection(segue: UIStoryboardSegue) {
     }
  
     // MARK: App State Restoration
     
-    override func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
-        
-        coder.encode(convertFrom, forKey: "convertFrom")
-        coder.encode(convertTo, forKey: "converTo")
-        coder.encode(sourcePicker.selectedRow(inComponent: 0), forKey: "sourcePickerSelectedRow")
-        coder.encode(goalPicker.selectedRow(inComponent: 0), forKey: "goalPickerSelectedRow")
-        coder.encode(amountToConvert.text, forKey: "amountToConvert")
-        
-        print("items encoded")
-        
-    }
-    
-    override func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
-        
-        let convertFrom = coder.decodeObject(forKey: "convertFrom") as! String
-        let convertTo = coder.decodeObject(forKey: "convertTo") as! String
-        let sourcePickerSelectedRow = coder.decodeInteger(forKey: "sourcePickerSelectedRow")
-        let goalPickerSelecterRow = coder.decodeInteger(forKey: "goalPickerSelectedRow")
-        let amountToConvert = coder.decodeObject(forKey: "amountToConvert") as! String
-        
-        self.convertFrom = convertFrom
-        self.convertTo = convertTo
-        self.sourcePicker.selectRow(sourcePickerSelectedRow, inComponent: 0, animated: false)
-        self.goalPicker.selectRow(goalPickerSelecterRow, inComponent: 0, animated: false)
-        self.amountToConvert.text = amountToConvert
-        
-    }
+//    override func encodeRestorableState(with coder: NSCoder) {
+//        super.encodeRestorableState(with: coder)
+//
+//        coder.encode(convertFrom, forKey: "convertFrom")
+//        coder.encode(convertTo, forKey: "converTo")
+//        coder.encode(sourcePicker.selectedRow(inComponent: 0), forKey: "sourcePickerSelectedRow")
+//        coder.encode(goalPicker.selectedRow(inComponent: 0), forKey: "goalPickerSelectedRow")
+//        coder.encode(amountToConvert.text, forKey: "amountToConvert")
+//
+//        print("items encoded")
+//
+//    }
+//
+//    override func decodeRestorableState(with coder: NSCoder) {
+//        super.decodeRestorableState(with: coder)
+//
+//        let convertFrom = coder.decodeObject(forKey: "convertFrom") as! String
+//        let convertTo = coder.decodeObject(forKey: "convertTo") as! String
+//        let sourcePickerSelectedRow = coder.decodeInteger(forKey: "sourcePickerSelectedRow")
+//        let goalPickerSelecterRow = coder.decodeInteger(forKey: "goalPickerSelectedRow")
+//        let amountToConvert = coder.decodeObject(forKey: "amountToConvert") as! String
+//
+//        self.convertFrom = convertFrom
+//        self.convertTo = convertTo
+//        self.sourcePicker.selectRow(sourcePickerSelectedRow, inComponent: 0, animated: false)
+//        self.goalPicker.selectRow(goalPickerSelecterRow, inComponent: 0, animated: false)
+//        self.amountToConvert.text = amountToConvert
+//
+//    }
 }
 

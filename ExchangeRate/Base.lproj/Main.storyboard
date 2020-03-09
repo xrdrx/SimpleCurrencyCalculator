@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="UqY-IR-XCC">
-                                <rect key="frame" x="0.0" y="10" width="375" height="439.5"/>
+                                <rect key="frame" x="0.0" y="10" width="375" height="208"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="1250" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4G2-Qe-EF4">
                                         <rect key="frame" x="8" y="0.0" width="359" height="50"/>
@@ -29,26 +29,24 @@
                                             <action selector="amountToConvertChanged" destination="BYZ-38-t0r" eventType="editingChanged" id="4Hn-kf-xrc"/>
                                         </connections>
                                     </textField>
-                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqW-Lh-CxY">
-                                        <rect key="frame" x="27.5" y="57" width="320" height="150"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="FBX-Md-85b"/>
-                                        </constraints>
-                                    </pickerView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ydm-p1-hcw">
-                                        <rect key="frame" x="178.5" y="214" width="18.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10k-rO-846">
-                                        <rect key="frame" x="27.5" y="241.5" width="320" height="150"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="Wis-Ns-3s6"/>
-                                        </constraints>
-                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uqH-Ym-nUU">
+                                        <rect key="frame" x="156" y="57" width="63" height="48"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                        <state key="normal" title="USD"/>
+                                        <connections>
+                                            <segue destination="8Zx-N1-ePz" kind="presentation" identifier="ConvertFrom" id="Ud5-9K-3To"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0lS-BT-8mH">
+                                        <rect key="frame" x="156" y="112" width="63" height="48"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                        <state key="normal" title="USD"/>
+                                        <connections>
+                                            <segue destination="8Zx-N1-ePz" kind="presentation" identifier="ConvertTo" id="pRr-ws-D5X"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter amount to be converted and currencies" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wlO-cR-DfM">
-                                        <rect key="frame" x="44" y="398.5" width="287" height="41"/>
+                                        <rect key="frame" x="44" y="167" width="287" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -70,14 +68,56 @@
                     </view>
                     <connections>
                         <outlet property="amountToConvert" destination="4G2-Qe-EF4" id="6ng-tN-zM8"/>
-                        <outlet property="goalPicker" destination="10k-rO-846" id="Czu-O6-QKL"/>
                         <outlet property="resultAmount" destination="wlO-cR-DfM" id="PE6-gl-cgq"/>
-                        <outlet property="sourcePicker" destination="cqW-Lh-CxY" id="Kgc-Ym-Phe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="139" y="116"/>
         </scene>
+        <!--Currency Select Table View Controller-->
+        <scene sceneID="FF1-zI-dzH">
+            <objects>
+                <tableViewController id="8Zx-N1-ePz" customClass="CurrencySelectTableViewController" customModule="ExchangeRate" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Atn-a2-nrd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CurrencyCell" textLabel="bR5-GL-XYT" style="IBUITableViewCellStyleDefault" id="wI3-yx-ak0">
+                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wI3-yx-ak0" id="yP9-WT-uls">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bR5-GL-XYT">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="ee6-ar-5Ve" kind="unwind" unwindAction="unwindFromCurrencySelectionWithSegue:" id="p6Z-tD-tWb"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8Zx-N1-ePz" id="ITa-zk-h5t"/>
+                            <outlet property="delegate" destination="8Zx-N1-ePz" id="3Md-av-ENQ"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MQK-TA-Gqb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="ee6-ar-5Ve" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="921" y="115"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="pRr-ws-D5X"/>
+    </inferredMetricsTieBreakers>
 </document>
