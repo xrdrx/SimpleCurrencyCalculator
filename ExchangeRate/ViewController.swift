@@ -17,6 +17,15 @@ class ViewController: UIViewController, CurrencySelectTableViewControllerDelegat
     var convertFrom: Currency?
     var convertTo: Currency?
 
+    @IBAction func convertToButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "ConvertTo", sender: sender)
+    }
+    @IBAction func convertFromButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "ConvertFrom", sender: sender)
+    }
+    
+    @IBOutlet var convertFromLabel: UILabel!
+    @IBOutlet var convertToLabel: UILabel!
     @IBOutlet var amountToConvert: UITextField!
     @IBOutlet var resultAmount: UILabel!
 
@@ -43,6 +52,7 @@ class ViewController: UIViewController, CurrencySelectTableViewControllerDelegat
         //select RUB to EUR as defaults
         convertFrom = Currency.RUB
         convertTo = Currency.EUR
+        updateSelectedCurrencies()
     }
     
     @objc func dismissKeyboard() {
@@ -51,13 +61,22 @@ class ViewController: UIViewController, CurrencySelectTableViewControllerDelegat
     }
     
     func convert() {
+        guard let amount = amountToConvert.text else { return }
+        if amount == "" {
+            resultAmount.text = ""
+            return
+        }
         if let from = convertFrom, let to = convertTo {
-            resultAmount.text = converter.convert(amountToConvert.text, exchangeRates?.rates[from.rawValue]?.rates[to.rawValue], formatter: NumberFormatter())
+            let result = converter.convert(amountToConvert.text, exchangeRates?.rates[from.rawValue]?.rates[to.rawValue], formatter: NumberFormatter())
+            resultAmount.text = "\(amount) \(from.rawValue) = \(result) \(to.rawValue)"
+        } else {
+            return
         }
     }
     
     func updateSelectedCurrencies() {
-        
+        convertFromLabel.text = convertFrom?.rawValue
+        convertToLabel.text = convertTo?.rawValue
     }
     
     func didSelect(currency: Currency, type selection: String) {
@@ -72,6 +91,7 @@ class ViewController: UIViewController, CurrencySelectTableViewControllerDelegat
             return
         }
         updateSelectedCurrencies()
+        convert()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
