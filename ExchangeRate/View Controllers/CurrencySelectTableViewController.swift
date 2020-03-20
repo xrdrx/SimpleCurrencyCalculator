@@ -8,9 +8,10 @@
 
 import UIKit
 
-class CurrencySelectTableViewController: UITableViewController {
+class CurrencySelectTableViewController: UITableViewController, Storyboarded {
     
     weak var viewModel: HomeViewModel?
+    weak var coordinator: MainCoordinator?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,7 @@ class CurrencySelectTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         let currency = Currency.allCases[indexPath.row]
         viewModel!.didSelectCurrency(currency: currency, type: viewModel!.selectionType)
-        tableView.reloadData()
+        coordinator?.dismissViewController()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

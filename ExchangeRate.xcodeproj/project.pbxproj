@@ -16,6 +16,9 @@
 		0D513B7F23F19ABD00F82291 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D513B7D23F19ABD00F82291 /* Main.storyboard */; };
 		0D513B8123F19AC400F82291 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D513B8023F19AC400F82291 /* Assets.xcassets */; };
 		0D513B8423F19AC400F82291 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D513B8223F19AC400F82291 /* LaunchScreen.storyboard */; };
+		0DCF65202424F66100A385DE /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCF651F2424F66100A385DE /* Storyboarded.swift */; };
+		0DCF65222424F74E00A385DE /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCF65212424F74E00A385DE /* MainCoordinator.swift */; };
+		0DCF65242424F76F00A385DE /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCF65232424F76F00A385DE /* Coordinator.swift */; };
 		0DFB34B02423A7CB007E8A49 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34AF2423A7CB007E8A49 /* Currency.swift */; };
 		0DFB34B22423A832007E8A49 /* ExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34B12423A832007E8A49 /* ExchangeRate.swift */; };
 		0DFB34B42423A8E4007E8A49 /* RemoteUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34B32423A8E4007E8A49 /* RemoteUrl.swift */; };
@@ -37,6 +40,9 @@
 		0D513B8023F19AC400F82291 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D513B8323F19AC400F82291 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D513B8523F19AC400F82291 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DCF651F2424F66100A385DE /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		0DCF65212424F74E00A385DE /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		0DCF65232424F76F00A385DE /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		0DFB34AF2423A7CB007E8A49 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		0DFB34B12423A832007E8A49 /* ExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRate.swift; sourceTree = "<group>"; };
 		0DFB34B32423A8E4007E8A49 /* RemoteUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUrl.swift; sourceTree = "<group>"; };
@@ -87,6 +93,8 @@
 				0D513B8023F19AC400F82291 /* Assets.xcassets */,
 				0D513B8223F19AC400F82291 /* LaunchScreen.storyboard */,
 				0D513B8523F19AC400F82291 /* Info.plist */,
+				0DCF65212424F74E00A385DE /* MainCoordinator.swift */,
+				0DCF65232424F76F00A385DE /* Coordinator.swift */,
 			);
 			path = ExchangeRate;
 			sourceTree = "<group>";
@@ -124,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				0D513B7D23F19ABD00F82291 /* Main.storyboard */,
+				0DCF651F2424F66100A385DE /* Storyboarded.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -216,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DCF65242424F76F00A385DE /* Coordinator.swift in Sources */,
 				0DFB34B02423A7CB007E8A49 /* Currency.swift in Sources */,
 				0D513B7C23F19ABD00F82291 /* ViewController.swift in Sources */,
 				0DFB34BC2423AE83007E8A49 /* HomeViewModel.swift in Sources */,
@@ -229,6 +239,8 @@
 				0D513B7A23F19ABD00F82291 /* SceneDelegate.swift in Sources */,
 				0D1FCC5223FC5B4200CE9919 /* Converter.swift in Sources */,
 				0DFB34B42423A8E4007E8A49 /* RemoteUrl.swift in Sources */,
+				0DCF65222424F74E00A385DE /* MainCoordinator.swift in Sources */,
+				0DCF65202424F66100A385DE /* Storyboarded.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

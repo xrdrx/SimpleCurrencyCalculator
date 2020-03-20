@@ -8,15 +8,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController, Storyboarded {
 
     let viewModel = HomeViewModel()
+    weak var coordinator: MainCoordinator?
 
     @IBAction func convertToButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: "ConvertTo", sender: sender)
+        coordinator?.chooseCurrency(viewModel: viewModel)
+        viewModel.selectionType = .To
     }
+    
     @IBAction func convertFromButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: "ConvertFrom", sender: sender)
+        coordinator?.chooseCurrency(viewModel: viewModel)
+        viewModel.selectionType = .From
     }
     
     @IBOutlet var convertFromLabel: UILabel!
@@ -51,20 +55,6 @@ class ViewController: UIViewController {
     @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationViewController = segue.destination as? CurrencySelectTableViewController
-        if segue.identifier == "ConvertTo" {
-            viewModel.selectionType = .To
-            }
-        if segue.identifier == "ConvertFrom" {
-            viewModel.selectionType = .From
-            }
-        destinationViewController?.viewModel = viewModel
-    }
-    
-    @IBAction func unwindFromCurrencySelection(segue: UIStoryboardSegue) {
     }
 }
 
