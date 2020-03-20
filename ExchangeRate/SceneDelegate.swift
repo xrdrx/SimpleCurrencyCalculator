@@ -46,12 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
         guard let mainVC = self.window?.rootViewController as? ViewController else { return }
-        guard let rates = mainVC.exchangeRates else { return }
-        mainVC.saverLoader.saveExchangeRates(rates)
+        mainVC.viewModel.saveRates()
         print("Rates saved")
-        
     }
-
-
 }
-

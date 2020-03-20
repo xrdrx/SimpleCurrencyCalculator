@@ -8,16 +8,10 @@
 
 import UIKit
 
-protocol CurrencySelectTableViewControllerDelegate: class {
-    func didSelect(currency: Currency, type selection: String)
-}
-
 class CurrencySelectTableViewController: UITableViewController {
     
-    var currency: Currency?
-    var selectionType: String?
-    weak var delegate: CurrencySelectTableViewControllerDelegate?
-
+    weak var viewModel: HomeViewModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -34,8 +28,8 @@ class CurrencySelectTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        currency = Currency.allCases[indexPath.row]
-        delegate?.didSelect(currency: currency!, type: selectionType!)
+        let currency = Currency.allCases[indexPath.row]
+        viewModel!.didSelectCurrency(currency: currency, type: viewModel!.selectionType)
         tableView.reloadData()
     }
     
@@ -45,7 +39,12 @@ class CurrencySelectTableViewController: UITableViewController {
         let currency = Currency.allCases[indexPath.row]
         
         cell.textLabel?.text = currency.rawValue
-        if currency == self.currency {
+        
+        let type = viewModel!.selectionType
+        let to = viewModel!.convertTo.value
+        let from = viewModel!.convertFrom.value
+        
+        if (type == .To && currency == to) || (type == .From && currency == from) {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none

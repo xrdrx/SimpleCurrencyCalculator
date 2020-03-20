@@ -11,7 +11,7 @@ import UIKit
 
 struct DataManager {
     
-    func loadRates(from file: URL) -> ExchangeRates? {
+    func loadLocalRates(from file: URL) -> ExchangeRates? {
         guard let data = try? Data(contentsOf: file) else { return nil }
         let rates = (try? JSONDecoder().decode(ExchangeRates.self, from: data))
         return rates
@@ -27,15 +27,15 @@ struct DataManager {
         saveRates(rates, to: exchangeRatesFileUrl)
     }
     
-    func loadExchangeRates(for controller: ViewController) {
-        controller.exchangeRates = loadRates(from: exchangeRatesFileUrl)
-        loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases, update: controller.exchangeRates) { (rates) in
-            controller.exchangeRates = rates
-        }
-    }
+//    func loadRemoteRates() -> ExchangeRates {
+//        var exchangeRates = ExchangeRates(rates: [:])
+//        loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases) { (rates) in
+//            exchangeRates = rates
+//        }
+//        return exchangeRates
+//    }
     
-    func loadRemoteRates(from url: URL, for currencies: Currency.AllCases, update currentRates: ExchangeRates?, completion: @escaping (ExchangeRates) -> Void) {
-        var exchangeRates = currentRates ?? ExchangeRates(rates: [:])
+    func loadRemoteRates(from url: URL, for currencies: Currency.AllCases, completion: @escaping (ExchangeRate) -> Void) {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
         for currency in currencies {
             components?.queryItems = [URLQueryItem(name: "base", value: currency.rawValue)]
@@ -43,8 +43,7 @@ struct DataManager {
             print(modifiedUrl)
             let task = URLSession.shared.dataTask(with: modifiedUrl) { (data, response, error) in
                 if let data = data, let rate = try? JSONDecoder().decode(ExchangeRate.self, from: data) {
-                    exchangeRates.rates[currency.rawValue] = rate
-                    completion(exchangeRates)
+                    completion(rate)
                 } else {
                     print("Error getting currency exchange rate")
                 }

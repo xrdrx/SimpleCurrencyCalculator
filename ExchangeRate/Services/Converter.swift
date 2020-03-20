@@ -9,10 +9,10 @@
 import Foundation
 
 struct Converter {
-    func convert(_ amount: String?,_ rate: Double?, formatter: NumberFormatter) -> String {
+    func convert(_ amount: String?,_ rate: Double?, formatter: NumberFormatter) -> String? {
         guard let amount = amount,
             let amountInDouble = formatter.number(from: amount),
-            let rate = rate else { return "Error" }
+            let rate = rate else { return nil}
         
         formatter.maximumFractionDigits = 2
         
@@ -22,7 +22,7 @@ struct Converter {
         if let result = formatter.string(from: result as NSDecimalNumber) {
             return result
         } else {
-            return "Error"
+            return nil
         }
     }
 }
