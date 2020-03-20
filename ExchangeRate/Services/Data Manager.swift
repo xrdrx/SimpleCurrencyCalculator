@@ -11,10 +11,13 @@ import UIKit
 
 struct DataManager {
     
-    func loadLocalRates(from file: URL) -> ExchangeRates? {
-        guard let data = try? Data(contentsOf: file) else { return nil }
-        let rates = (try? JSONDecoder().decode(ExchangeRates.self, from: data))
-        return rates
+    func loadLocalRates(from file: URL) -> ExchangeRates {
+        guard let data = try? Data(contentsOf: file) else { return ExchangeRates(rates: [:]) }
+        if let rates = (try? JSONDecoder().decode(ExchangeRates.self, from: data)) {
+            return rates
+        } else {
+            return ExchangeRates(rates: [:])
+        }
     }
     
     func saveRates(_ rates: ExchangeRates, to file: URL) {

@@ -14,12 +14,12 @@ class HomeViewController: UIViewController, Storyboarded {
     weak var coordinator: MainCoordinator?
 
     @IBAction func convertToButtonTapped(_ sender: Any) {
-        coordinator?.chooseCurrency(viewModel: viewModel)
+        coordinator?.showSearchable(viewModel: viewModel)
         viewModel.selectionType = .To
     }
     
     @IBAction func convertFromButtonTapped(_ sender: Any) {
-        coordinator?.chooseCurrency(viewModel: viewModel)
+        coordinator?.showSearchable(viewModel: viewModel)
         viewModel.selectionType = .From
     }
     
