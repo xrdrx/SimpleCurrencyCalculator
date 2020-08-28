@@ -30,14 +30,6 @@ struct DataManager {
         saveRates(rates, to: exchangeRatesFileUrl)
     }
     
-//    func loadRemoteRates() -> ExchangeRates {
-//        var exchangeRates = ExchangeRates(rates: [:])
-//        loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases) { (rates) in
-//            exchangeRates = rates
-//        }
-//        return exchangeRates
-//    }
-    
     func loadRemoteRates(from url: URL, for currencies: Currency.AllCases, completion: @escaping (ExchangeRate) -> Void) {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
         for currency in currencies {

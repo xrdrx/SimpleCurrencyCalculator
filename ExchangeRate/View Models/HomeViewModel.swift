@@ -13,17 +13,21 @@ class HomeViewModel {
     let manager = DataManager()
     let converter = Converter()
     
-    let convertFrom: Box<Currency> = Box(Currency.RUB)
-    let convertTo: Box<Currency> = Box(Currency.EUR)
-    let resultAmount = Box("")
+    let convertFrom: Observable<Currency> = Observable(Currency.RUB)
+    let convertTo: Observable<Currency> = Observable(Currency.EUR)
+    let resultAmount = Observable("")
     var amountToConvert: String = ""
     var selectionType: Convertion = .From
     
     var currency = Currency.allCases
     var filterString: String = "" {
         didSet {
-            currency = Currency.allCases.filter { $0.rawValue.hasPrefix(filterString) }
+            filterCurrencyArray()
         }
+    }
+    
+    private func filterCurrencyArray() {
+        currency = Currency.allCases.filter { $0.rawValue.hasPrefix(filterString) }
     }
     
     init() {
@@ -34,22 +38,41 @@ class HomeViewModel {
         }
     }
     
-    func convert() {
-        if amountToConvert == "" {
+    func convertAndUpdateResultText() {
+        guard let amount = getAmountToCovert(),
+              let rate = getConvertionRate()
+            else {
             resultAmount.value = ""
             return
         }
-        let from = convertFrom.value
-        let to = convertTo.value
-        let rate = to == from ? 1 : exchangeRates.rates[from.rawValue]?.rates[to.rawValue]
-        if let result = converter.convert(
-            amountToConvert,
-            rate,
-            formatter: NumberFormatter()) {
-            resultAmount.value = "\(amountToConvert) \(from.rawValue) = \(result) \(to.rawValue)"
-        } else {
-            return
+        
+        let result = converter.convert(amount, rate)
+        updateResultText(result)
+    }
+    
+    private func getAmountToCovert() -> NSNumber? {
+        guard amountToConvertIsNumber() else { return nil }
+        return NSNumber(value: Double(amountToConvert)!)
+    }
+    
+    private func amountToConvertIsNumber() -> Bool {
+        return stringIsNumber(amountToConvert)
+    }
+    
+    private func stringIsNumber(_ string: String) -> Bool {
+        return Double(string) != nil
+    }
+    
+    private func getConvertionRate() -> NSNumber? {
+        if convertFrom.value == convertTo.value { return 1 }
+        if let rate = exchangeRates.rates[convertFrom.value.rawValue]?.rates[convertTo.value.rawValue] {
+            return NSNumber(value: rate)
         }
+        return nil
+    }
+    
+    private func updateResultText(_ result: (String, String)) {
+        resultAmount.value = "\(result.0) \(convertFrom.value.rawValue) =\n\(result.1) \(convertTo.value.rawValue)"
     }
     
     func didSelectCurrency(currency: Currency, type selection: Convertion) {
@@ -59,7 +82,7 @@ class HomeViewModel {
         case .From:
             convertFrom.value = currency
         }
-        convert()
+        convertAndUpdateResultText()
     }
     
     func saveRates() {

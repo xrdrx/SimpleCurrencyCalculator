@@ -54,7 +54,6 @@ class SearchTableViewController: UIViewController, Storyboarded, UITableViewDele
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CurrencyCell", for: indexPath)
-        // Configure the cell...
         let currency = viewModel!.currency[indexPath.row]
         
         cell.textLabel?.text = currency.rawValue

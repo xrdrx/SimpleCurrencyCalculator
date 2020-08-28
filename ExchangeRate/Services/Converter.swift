@@ -8,21 +8,32 @@
 
 import Foundation
 
-struct Converter {
-    func convert(_ amount: String?,_ rate: Double?, formatter: NumberFormatter) -> String? {
-        guard let amount = amount,
-            let amountInDouble = formatter.number(from: amount),
-            let rate = rate else { return nil}
-        
-        formatter.maximumFractionDigits = 2
-        
-        let startAmount: Decimal = amountInDouble.decimalValue
-        let exchangeRate: Decimal = NSNumber(floatLiteral: rate).decimalValue
-        let result = startAmount * exchangeRate
-        if let result = formatter.string(from: result as NSDecimalNumber) {
-            return result
-        } else {
-            return nil
-        }
+class Converter {
+    let formatter = CurrencyFormatter()
+    
+    func convert(_ amount: NSNumber,_ rate: NSNumber) -> (String, String) {
+        let result = amount.decimalValue * rate.decimalValue
+        let resultText = convertDecimalNumberToText(number: result as NSNumber)
+        let amountText = convertDecimalNumberToText(number: amount)
+        return (amountText, resultText)
+    }
+    
+    func convertDecimalNumberToText(number: NSNumber) -> String {
+        guard let string = formatter.string(from: number) else { return "" }
+        return string
+    }
+}
+
+class CurrencyFormatter: NumberFormatter {
+    override init() {
+        super.init()
+        self.maximumFractionDigits = 2
+        self.usesGroupingSeparator = true
+        self.groupingSize = 3
+        self.groupingSeparator = " "
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

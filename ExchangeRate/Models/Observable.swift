@@ -6,7 +6,7 @@
 //  Copyright © 2020 Aleksandr Svetilov. All rights reserved.
 //
 
-final class Box<T> {
+final class Observable<T> {
   typealias Listener = (T) -> Void
   var listener: Listener?
   var value: T {

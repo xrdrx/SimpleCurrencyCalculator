@@ -13,28 +13,33 @@ class HomeViewController: UIViewController, Storyboarded {
     let viewModel = HomeViewModel()
     weak var coordinator: MainCoordinator?
 
-    @IBAction func convertToButtonTapped(_ sender: Any) {
-        coordinator?.showSearchable(viewModel: viewModel)
-        viewModel.selectionType = .To
-    }
-    
-    @IBAction func convertFromButtonTapped(_ sender: Any) {
-        coordinator?.showSearchable(viewModel: viewModel)
-        viewModel.selectionType = .From
-    }
-    
     @IBOutlet var convertFromLabel: UILabel!
     @IBOutlet var convertToLabel: UILabel!
     @IBOutlet var amountToConvert: UITextField!
     @IBOutlet var resultAmount: UILabel!
-
+    
+    @IBAction func convertToButtonTapped(_ sender: Any) {
+        coordinator?.showCurrencySelectionView(viewModel: viewModel)
+        viewModel.selectionType = .To
+    }
+    
+    @IBAction func convertFromButtonTapped(_ sender: Any) {
+        coordinator?.showCurrencySelectionView(viewModel: viewModel)
+        viewModel.selectionType = .From
+    }
+    
     @IBAction func amountToConvertChanged() {
         viewModel.amountToConvert = amountToConvert?.text ?? ""
-        viewModel.convert()
+        viewModel.convertAndUpdateResultText()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViewModel()
+        setupKeyboardDismissByTap()
+    }
+    
+    private func setupViewModel() {
         viewModel.convertFrom.bind { [weak self] convertFrom in
             self?.convertFromLabel.text = convertFrom.rawValue
         }
@@ -44,16 +49,14 @@ class HomeViewController: UIViewController, Storyboarded {
         viewModel.resultAmount.bind { [weak self] result in
             self?.resultAmount.text = result
         }
+    }
+    
+    private func setupKeyboardDismissByTap() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-
-        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
-        //tap.cancelsTouchesInView = false
-
         view.addGestureRecognizer(tap)
     }
     
     @objc func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
 }
