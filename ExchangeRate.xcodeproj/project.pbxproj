@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D087D322508F5250092BF4E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D087D312508F5250092BF4E /* HomeView.swift */; };
+		0D087D342508FA510092BF4E /* UIView Anchor Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D087D332508FA510092BF4E /* UIView Anchor Extension.swift */; };
+		0D1ACA022508FE980033007E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1ACA012508FE980033007E /* HomeViewController.swift */; };
 		0D1FCC5223FC5B4200CE9919 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FCC5123FC5B4200CE9919 /* Converter.swift */; };
 		0D1FCC5423FC5B4B00CE9919 /* Data Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FCC5323FC5B4B00CE9919 /* Data Manager.swift */; };
 		0D513B7823F19ABD00F82291 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D513B7723F19ABD00F82291 /* AppDelegate.swift */; };
 		0D513B7A23F19ABD00F82291 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D513B7923F19ABD00F82291 /* SceneDelegate.swift */; };
-		0D513B7C23F19ABD00F82291 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D513B7B23F19ABD00F82291 /* HomeViewController.swift */; };
 		0D513B7F23F19ABD00F82291 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D513B7D23F19ABD00F82291 /* Main.storyboard */; };
 		0D513B8123F19AC400F82291 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D513B8023F19AC400F82291 /* Assets.xcassets */; };
 		0D513B8423F19AC400F82291 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D513B8223F19AC400F82291 /* LaunchScreen.storyboard */; };
@@ -29,12 +31,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D087D312508F5250092BF4E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0D087D332508FA510092BF4E /* UIView Anchor Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView Anchor Extension.swift"; sourceTree = "<group>"; };
+		0D1ACA012508FE980033007E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0D1FCC5123FC5B4200CE9919 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		0D1FCC5323FC5B4B00CE9919 /* Data Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Manager.swift"; sourceTree = "<group>"; };
 		0D513B7423F19ABD00F82291 /* ExchangeRate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeRate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D513B7723F19ABD00F82291 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D513B7923F19ABD00F82291 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		0D513B7B23F19ABD00F82291 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0D513B7E23F19ABD00F82291 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0D513B8023F19AC400F82291 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D513B8323F19AC400F82291 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -63,6 +67,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D087D352508FA6F0092BF4E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0D087D332508FA510092BF4E /* UIView Anchor Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		0D513B6B23F19ABD00F82291 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +99,7 @@
 				0D513B7923F19ABD00F82291 /* SceneDelegate.swift */,
 				0D513B8023F19AC400F82291 /* Assets.xcassets */,
 				0D89E4F124F979E600BE0B2D /* Coordinators */,
+				0D087D352508FA6F0092BF4E /* Extension */,
 				0DFB34AE2423A6FB007E8A49 /* Models */,
 				0DFB34BA2423ABDD007E8A49 /* Services */,
 				0DFB34B72423A9CC007E8A49 /* View Controllers */,
@@ -121,8 +134,8 @@
 		0DFB34B72423A9CC007E8A49 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0D513B7B23F19ABD00F82291 /* HomeViewController.swift */,
 				0DCF65252425714900A385DE /* SearchTableViewController.swift */,
+				0D1ACA012508FE980033007E /* HomeViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -141,6 +154,7 @@
 				0D513B7D23F19ABD00F82291 /* Main.storyboard */,
 				0D513B8223F19AC400F82291 /* LaunchScreen.storyboard */,
 				0DCF651F2424F66100A385DE /* Storyboarded.swift */,
+				0D087D312508F5250092BF4E /* HomeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -227,12 +241,14 @@
 			files = (
 				0DCF65242424F76F00A385DE /* Coordinator.swift in Sources */,
 				0DFB34B02423A7CB007E8A49 /* Currency.swift in Sources */,
-				0D513B7C23F19ABD00F82291 /* HomeViewController.swift in Sources */,
 				0DFB34BC2423AE83007E8A49 /* HomeViewModel.swift in Sources */,
 				0D1FCC5423FC5B4B00CE9919 /* Data Manager.swift in Sources */,
+				0D087D322508F5250092BF4E /* HomeView.swift in Sources */,
 				0DFB34C32424241F007E8A49 /* Convertion.swift in Sources */,
+				0D1ACA022508FE980033007E /* HomeViewController.swift in Sources */,
 				0DFB34B22423A832007E8A49 /* ExchangeRate.swift in Sources */,
 				0DFB34C12423AFF0007E8A49 /* Observable.swift in Sources */,
+				0D087D342508FA510092BF4E /* UIView Anchor Extension.swift in Sources */,
 				0D513B7823F19ABD00F82291 /* AppDelegate.swift in Sources */,
 				0DFB34B62423A8ED007E8A49 /* LocalUrl.swift in Sources */,
 				0D513B7A23F19ABD00F82291 /* SceneDelegate.swift in Sources */,

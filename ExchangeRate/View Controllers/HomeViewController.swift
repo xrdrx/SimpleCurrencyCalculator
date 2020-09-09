@@ -1,44 +1,66 @@
 //
-//  ViewController.swift
+//  testViewController.swift
 //  ExchangeRate
 //
-//  Created by Aleksandr Svetilov on 10.02.2020.
+//  Created by Aleksandr Svetilov on 09.09.2020.
 //  Copyright © 2020 Aleksandr Svetilov. All rights reserved.
 //
 
 import UIKit
 
-class HomeViewController: UIViewController, UITextFieldDelegate, Storyboarded {
+class HomeViewController: UIViewController {
 
+    let homeView = HomeView()
     let viewModel = HomeViewModel()
-    weak var coordinator: MainCoordinator?
-
-    @IBOutlet var convertFromLabel: UILabel!
-    @IBOutlet var convertToLabel: UILabel!
-    @IBOutlet var amountToConvert: UITextField!
-    @IBOutlet var resultAmount: UILabel!
     
-    @IBAction func convertToButtonTapped(_ sender: Any) {
+    weak var coordinator: MainCoordinator?
+    
+    var convertFromLabel: UILabel!
+    var convertToLabel: UILabel!
+    var amountToConvert: UITextField!
+    var resultAmount: UILabel!
+    var fromButton: UIButton!
+    var toButton: UIButton!
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        convertFromLabel = homeView.convertFromLabel
+        convertToLabel = homeView.convertToLabel
+        amountToConvert = homeView.amount
+        resultAmount = homeView.result
+        fromButton = homeView.fromButton
+        toButton = homeView.toButton
+        
+        toButton.addTarget(self, action: #selector(convertToButtonTapped), for: .touchUpInside)
+        fromButton.addTarget(self, action: #selector(convertFromButtonTapped), for: .touchUpInside)
+        amountToConvert.addTarget(self, action: #selector(amountToConvertChanged), for: .editingChanged)
+        
+        setupViewModel()
+        setupKeyboardDismissByTap()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view = homeView
+    }
+    
+    @objc func convertToButtonTapped() {
         coordinator?.showCurrencySelectionView(viewModel: viewModel)
         viewModel.selectionType = .To
     }
     
-    @IBAction func convertFromButtonTapped(_ sender: Any) {
+    @objc func convertFromButtonTapped() {
         coordinator?.showCurrencySelectionView(viewModel: viewModel)
         viewModel.selectionType = .From
     }
     
-    @IBAction func amountToConvertChanged() {
+    @objc func amountToConvertChanged() {
         viewModel.rawAmountToConvert = amountToConvert?.text ?? ""
         amountToConvert.text = viewModel.formattedAmountToConvert
-    }
-    
-    @IBAction 
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViewModel()
-        setupKeyboardDismissByTap()
     }
     
     private func setupViewModel() {
@@ -61,5 +83,5 @@ class HomeViewController: UIViewController, UITextFieldDelegate, Storyboarded {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-}
 
+}

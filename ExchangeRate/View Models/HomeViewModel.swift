@@ -19,13 +19,33 @@ class HomeViewModel {
     
     var rawAmountToConvert: String = "" {
         didSet {
-            setStrippedAmount()
-            setFormattedAmount()
-            convertAndUpdateResultText()
+            didSetRawAmountToConvert()
         }
     }
     var strippedAmountToConvert: String = ""
     var formattedAmountToConvert: String = ""
+    
+    var selectionType: Convertion = .From
+    var currency = Currency.allCases
+    var filterString: String = "" {
+        didSet {
+            filterCurrencyArray()
+        }
+    }
+    
+    init() {
+        self.exchangeRates = manager.loadLocalRates(from: exchangeRatesFileUrl)
+        manager.loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases) { (rate) in
+            self.exchangeRates.rates[rate.base] = rate
+            print("Added \(rate.base) rates")
+        }
+    }
+    
+    private func didSetRawAmountToConvert() {
+        setStrippedAmount()
+        setFormattedAmount()
+        convertAndUpdateResultText()
+    }
     
     private func setStrippedAmount() {
         strippedAmountToConvert = removeWhiteSpacesFromString(rawAmountToConvert)
@@ -60,27 +80,6 @@ class HomeViewModel {
         return formattedString
     }
     
-    var selectionType: Convertion = .From
-    
-    var currency = Currency.allCases
-    var filterString: String = "" {
-        didSet {
-            filterCurrencyArray()
-        }
-    }
-    
-    private func filterCurrencyArray() {
-        currency = Currency.allCases.filter { $0.rawValue.hasPrefix(filterString) }
-    }
-    
-    init() {
-        self.exchangeRates = manager.loadLocalRates(from: exchangeRatesFileUrl)
-        manager.loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases) { (rate) in
-            self.exchangeRates.rates[rate.base] = rate
-            print("Added \(rate.base) rates")
-        }
-    }
-    
     func convertAndUpdateResultText() {
         guard let amount = getAmountToConvert(),
               let rate = getConvertionRate()
@@ -88,7 +87,6 @@ class HomeViewModel {
             resultAmount.value = ""
             return
         }
-        
         let result = converter.convert(amount, rate)
         updateResultText(result)
     }
@@ -116,6 +114,10 @@ class HomeViewModel {
     
     private func updateResultText(_ result: (String, String)) {
         resultAmount.value = "\(result.0) \(convertFrom.value.rawValue) =\n\(result.1) \(convertTo.value.rawValue)"
+    }
+    
+    private func filterCurrencyArray() {
+        currency = Currency.allCases.filter { $0.rawValue.hasPrefix(filterString) }
     }
     
     func didSelectCurrency(currency: Currency, type selection: Convertion) {

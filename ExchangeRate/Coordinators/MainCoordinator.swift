@@ -16,8 +16,15 @@ class MainCoordinator: Coordinator {
         self.navigationController = navigationController
     }
 
+//    func start() {
+//        let vc = HomeViewController.instantiate()
+//        vc.coordinator = self
+//        vc.title = "Currency Converter"
+//        navigationController.pushViewController(vc, animated: false)
+//    }
+    
     func start() {
-        let vc = HomeViewController.instantiate()
+        let vc = HomeViewController()
         vc.coordinator = self
         vc.title = "Currency Converter"
         navigationController.pushViewController(vc, animated: false)
