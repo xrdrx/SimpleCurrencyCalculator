@@ -57,6 +57,7 @@ class HomeViewModel {
     }
     
     private func truncateDoubleInString(_ string: String) -> String {
+        guard strippedAmountToConvertIsNumber() else { return string }
         if string.hasSuffix(".") { return string }
         let double = Double(string)!
         var result = NSDecimalNumber(value: double)

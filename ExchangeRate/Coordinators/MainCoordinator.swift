@@ -31,9 +31,8 @@ class MainCoordinator: Coordinator {
     }
     
     func showCurrencySelectionView(viewModel model: HomeViewModel) {
-        let vc = SearchTableViewController.instantiate()
+        let vc = CurrencySelectionViewController(viewModel: model)
         vc.coordinator = self
-        vc.viewModel = model
         navigationController.present(vc, animated: true)
     }
     
