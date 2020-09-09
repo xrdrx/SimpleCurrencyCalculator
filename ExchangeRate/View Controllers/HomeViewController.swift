@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, Storyboarded {
+class HomeViewController: UIViewController, UITextFieldDelegate, Storyboarded {
 
     let viewModel = HomeViewModel()
     weak var coordinator: MainCoordinator?
@@ -29,9 +29,11 @@ class HomeViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func amountToConvertChanged() {
-        viewModel.amountToConvert = amountToConvert?.text ?? ""
-        viewModel.convertAndUpdateResultText()
+        viewModel.rawAmountToConvert = amountToConvert?.text ?? ""
+        amountToConvert.text = viewModel.formattedAmountToConvert
     }
+    
+    @IBAction 
     
     override func viewDidLoad() {
         super.viewDidLoad()

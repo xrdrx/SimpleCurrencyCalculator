@@ -16,7 +16,50 @@ class HomeViewModel {
     let convertFrom: Observable<Currency> = Observable(Currency.RUB)
     let convertTo: Observable<Currency> = Observable(Currency.EUR)
     let resultAmount = Observable("")
-    var amountToConvert: String = ""
+    
+    var rawAmountToConvert: String = "" {
+        didSet {
+            setStrippedAmount()
+            setFormattedAmount()
+            convertAndUpdateResultText()
+        }
+    }
+    var strippedAmountToConvert: String = ""
+    var formattedAmountToConvert: String = ""
+    
+    private func setStrippedAmount() {
+        strippedAmountToConvert = removeWhiteSpacesFromString(rawAmountToConvert)
+        strippedAmountToConvert = truncateDoubleInString(strippedAmountToConvert)
+    }
+    
+    private func removeWhiteSpacesFromString(_ string: String) -> String {
+        return string.components(separatedBy: .whitespaces).joined()
+    }
+    
+    private func truncateDoubleInString(_ string: String) -> String {
+        if string.hasSuffix(".") { return string }
+        let double = Double(string)!
+        var result = NSDecimalNumber(value: double)
+        result = result.multiplying(by: 100).rounding(accordingToBehavior: nil).dividing(by: 100)
+        return result.stringValue
+    }
+    
+    private func setFormattedAmount() {
+        guard strippedAmountToConvertIsNumber() else {
+            formattedAmountToConvert = rawAmountToConvert
+            return
+        }
+        let truncatedAmount = truncateDoubleInString(strippedAmountToConvert)
+        formattedAmountToConvert = getFormattedCurrencyString(truncatedAmount)
+    }
+    
+    private func getFormattedCurrencyString(_ string: String) -> String {
+        let number = NSNumber(value: Double(string)!)
+        let formattedString = converter.convertDecimalNumberToText(number: number)
+        if string.hasSuffix(".") { return formattedString + "." }
+        return formattedString
+    }
+    
     var selectionType: Convertion = .From
     
     var currency = Currency.allCases
@@ -39,7 +82,7 @@ class HomeViewModel {
     }
     
     func convertAndUpdateResultText() {
-        guard let amount = getAmountToCovert(),
+        guard let amount = getAmountToConvert(),
               let rate = getConvertionRate()
             else {
             resultAmount.value = ""
@@ -50,13 +93,13 @@ class HomeViewModel {
         updateResultText(result)
     }
     
-    private func getAmountToCovert() -> NSNumber? {
-        guard amountToConvertIsNumber() else { return nil }
-        return NSNumber(value: Double(amountToConvert)!)
+    private func getAmountToConvert() -> NSNumber? {
+        guard strippedAmountToConvertIsNumber() else { return nil }
+        return NSNumber(value: Double(strippedAmountToConvert)!)
     }
     
-    private func amountToConvertIsNumber() -> Bool {
-        return stringIsNumber(amountToConvert)
+    private func strippedAmountToConvertIsNumber() -> Bool {
+        return stringIsNumber(strippedAmountToConvert)
     }
     
     private func stringIsNumber(_ string: String) -> Bool {
