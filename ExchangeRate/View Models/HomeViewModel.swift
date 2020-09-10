@@ -11,7 +11,8 @@ import Foundation
 class HomeViewModel {
     var exchangeRates = ExchangeRates(rates: [:])
     let manager = DataManager()
-    let converter = Converter()
+    let converter: Converter
+    let exchangeRatesProvider: ExchangeRatesProvider
     
     let convertFrom: Observable<Currency> = Observable(Currency.RUB)
     let convertTo: Observable<Currency> = Observable(Currency.EUR)
@@ -33,11 +34,17 @@ class HomeViewModel {
         }
     }
     
-    init() {
+    init(ratesProvider: ExchangeRatesProvider, converter: Converter) {
+        self.exchangeRatesProvider = ratesProvider
+        self.converter = converter
         self.exchangeRates = manager.loadLocalRates(from: exchangeRatesFileUrl)
-        manager.loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases) { (rate) in
-            self.exchangeRates.rates[rate.base] = rate
-            print("Added \(rate.base) rates")
+//        manager.loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases) { (rate) in
+//            self.exchangeRates.rates[rate.base] = rate
+//            print("Added \(rate.base) rates")
+        for currency in Currency.allCases {
+            ratesProvider.getExchangeRatesFor(currency: currency) { (rate) in
+                self.exchangeRates.rates[rate.base] = rate
+            }
         }
     }
     

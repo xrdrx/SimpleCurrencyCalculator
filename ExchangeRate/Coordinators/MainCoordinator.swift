@@ -11,27 +11,21 @@ import UIKit
 class MainCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    let factory = DefaultFactory()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-
-//    func start() {
-//        let vc = HomeViewController.instantiate()
-//        vc.coordinator = self
-//        vc.title = "Currency Converter"
-//        navigationController.pushViewController(vc, animated: false)
-//    }
     
     func start() {
-        let vc = HomeViewController()
+        let vc = factory.makeHomeViewController()
         vc.coordinator = self
         vc.title = "Currency Converter"
         navigationController.pushViewController(vc, animated: false)
     }
     
     func showCurrencySelectionView(viewModel model: HomeViewModel) {
-        let vc = CurrencySelectionViewController(viewModel: model)
+        let vc = factory.makeCurrencySelectionController(viewModel: model)
         vc.coordinator = self
         navigationController.present(vc, animated: true)
     }

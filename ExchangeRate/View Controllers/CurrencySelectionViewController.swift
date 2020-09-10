@@ -10,7 +10,7 @@ import UIKit
 
 class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var currencySelectionView = CurrencySelectionView()
+    var currencySelectionView: CurrencySelectionView
     var viewModel: HomeViewModel
     
     weak var coordinator: MainCoordinator?
@@ -23,8 +23,9 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         view = currencySelectionView
     }
     
-    init(viewModel: HomeViewModel) {
+    init(viewModel: HomeViewModel, view: CurrencySelectionView) {
         self.viewModel = viewModel
+        self.currencySelectionView = view
         super.init(nibName: nil, bundle: nil)
         tableView = currencySelectionView.tableView
         textField = currencySelectionView.textField

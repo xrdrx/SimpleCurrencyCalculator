@@ -10,8 +10,8 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
-    let homeView = HomeView()
-    let viewModel = HomeViewModel()
+    var homeView: HomeView
+    var viewModel: HomeViewModel
     
     weak var coordinator: MainCoordinator?
     
@@ -22,7 +22,9 @@ class HomeViewController: UIViewController {
     var fromButton: UIButton!
     var toButton: UIButton!
     
-    init() {
+    init(viewModel: HomeViewModel, view: HomeView) {
+        self.viewModel = viewModel
+        self.homeView = view
         super.init(nibName: nil, bundle: nil)
         convertFromLabel = homeView.convertFromLabel
         convertToLabel = homeView.convertToLabel

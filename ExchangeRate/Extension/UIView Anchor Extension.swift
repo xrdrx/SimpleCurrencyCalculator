@@ -37,6 +37,14 @@ extension UIView {
         if width != 0 {
             widthAnchor.constraint(equalToConstant: width).isActive = true
         }
-        
     }
+    
+    func setTopAnchor(_ top: NSLayoutYAxisAnchor, _ padding: CGFloat = 0) {
+        self.topAnchor.constraint(equalTo: top, constant: padding).isActive = true
+    }
+    
+    func setLeadingAnchor(_ leading: NSLayoutXAxisAnchor, _ padding: CGFloat = 0) {
+        self.leadingAnchor.constraint(equalTo: leading, constant: padding).isActive = true
+    }
+    
 }
