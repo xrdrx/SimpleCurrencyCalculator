@@ -26,17 +26,8 @@ class HomeViewController: UIViewController {
         self.viewModel = viewModel
         self.homeView = view
         super.init(nibName: nil, bundle: nil)
-        convertFromLabel = homeView.convertFromLabel
-        convertToLabel = homeView.convertToLabel
-        amountToConvert = homeView.amount
-        resultAmount = homeView.result
-        fromButton = homeView.fromButton
-        toButton = homeView.toButton
         
-        toButton.addTarget(self, action: #selector(convertToButtonTapped), for: .touchUpInside)
-        fromButton.addTarget(self, action: #selector(convertFromButtonTapped), for: .touchUpInside)
-        amountToConvert.addTarget(self, action: #selector(amountToConvertChanged), for: .editingChanged)
-        
+        setupUiElements()
         setupViewModel()
         setupKeyboardDismissByTap()
     }
@@ -50,19 +41,16 @@ class HomeViewController: UIViewController {
         view = homeView
     }
     
-    @objc func convertToButtonTapped() {
-        coordinator?.showCurrencySelectionView(viewModel: viewModel)
-        viewModel.selectionType = .To
-    }
-    
-    @objc func convertFromButtonTapped() {
-        coordinator?.showCurrencySelectionView(viewModel: viewModel)
-        viewModel.selectionType = .From
-    }
-    
-    @objc func amountToConvertChanged() {
-        viewModel.rawAmountToConvert = amountToConvert?.text ?? ""
-        amountToConvert.text = viewModel.formattedAmountToConvert
+    private func setupUiElements() {
+        convertFromLabel = homeView.convertFromLabel
+        convertToLabel = homeView.convertToLabel
+        resultAmount = homeView.result
+        amountToConvert = homeView.amount
+        amountToConvert.addTarget(self, action: #selector(amountToConvertChanged), for: .editingChanged)
+        fromButton = homeView.fromButton
+        fromButton.addTarget(self, action: #selector(convertFromButtonTapped), for: .touchUpInside)
+        toButton = homeView.toButton
+        toButton.addTarget(self, action: #selector(convertToButtonTapped), for: .touchUpInside)
     }
     
     private func setupViewModel() {
@@ -80,6 +68,21 @@ class HomeViewController: UIViewController {
     private func setupKeyboardDismissByTap() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
+    }
+    
+    @objc func convertToButtonTapped() {
+        coordinator?.showCurrencySelectionView(viewModel: viewModel)
+        viewModel.selectionType = .To
+    }
+    
+    @objc func convertFromButtonTapped() {
+        coordinator?.showCurrencySelectionView(viewModel: viewModel)
+        viewModel.selectionType = .From
+    }
+    
+    @objc func amountToConvertChanged() {
+        viewModel.rawAmountToConvert = amountToConvert?.text ?? ""
+        amountToConvert.text = viewModel.formattedAmountToConvert
     }
     
     @objc func dismissKeyboard() {

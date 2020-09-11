@@ -27,19 +27,30 @@ class CurrencySelectionViewController: UIViewController, UITableViewDelegate, UI
         self.viewModel = viewModel
         self.currencySelectionView = view
         super.init(nibName: nil, bundle: nil)
-        tableView = currencySelectionView.tableView
-        textField = currencySelectionView.textField
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CurrencyCell")
         
-        self.viewModel.filterString = ""
-        
-        textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
+        setupUiElements()
+        setupViewModel()
+        setupTableView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUiElements() {
+        textField = currencySelectionView.textField
+        textField.addTarget(self, action: #selector(textFieldValueChanged), for: .editingChanged)
+        tableView = currencySelectionView.tableView
+    }
+    
+    private func setupViewModel() {
+        viewModel.filterString = ""
+    }
+    
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CurrencyCell")
     }
     
     @objc func textFieldValueChanged() {

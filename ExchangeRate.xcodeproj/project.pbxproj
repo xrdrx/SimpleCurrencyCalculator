@@ -15,7 +15,7 @@
 		0D1ACA08250A882C0033007E /* Network Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1ACA07250A882C0033007E /* Network Service.swift */; };
 		0D1ACA0A250A88720033007E /* Exchange Rates Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1ACA09250A88720033007E /* Exchange Rates Provider.swift */; };
 		0D1FCC5223FC5B4200CE9919 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FCC5123FC5B4200CE9919 /* Converter.swift */; };
-		0D1FCC5423FC5B4B00CE9919 /* Data Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FCC5323FC5B4B00CE9919 /* Data Manager.swift */; };
+		0D1FCC5423FC5B4B00CE9919 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1FCC5323FC5B4B00CE9919 /* Storage.swift */; };
 		0D513B7823F19ABD00F82291 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D513B7723F19ABD00F82291 /* AppDelegate.swift */; };
 		0D513B7A23F19ABD00F82291 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D513B7923F19ABD00F82291 /* SceneDelegate.swift */; };
 		0D513B8123F19AC400F82291 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D513B8023F19AC400F82291 /* Assets.xcassets */; };
@@ -24,8 +24,6 @@
 		0DCF65242424F76F00A385DE /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCF65232424F76F00A385DE /* Coordinator.swift */; };
 		0DFB34B02423A7CB007E8A49 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34AF2423A7CB007E8A49 /* Currency.swift */; };
 		0DFB34B22423A832007E8A49 /* ExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34B12423A832007E8A49 /* ExchangeRate.swift */; };
-		0DFB34B42423A8E4007E8A49 /* RemoteUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34B32423A8E4007E8A49 /* RemoteUrl.swift */; };
-		0DFB34B62423A8ED007E8A49 /* LocalUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34B52423A8ED007E8A49 /* LocalUrl.swift */; };
 		0DFB34BC2423AE83007E8A49 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34BB2423AE83007E8A49 /* HomeViewModel.swift */; };
 		0DFB34C12423AFF0007E8A49 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34C02423AFF0007E8A49 /* Observable.swift */; };
 		0DFB34C32424241F007E8A49 /* Convertion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFB34C22424241F007E8A49 /* Convertion.swift */; };
@@ -40,7 +38,7 @@
 		0D1ACA07250A882C0033007E /* Network Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network Service.swift"; sourceTree = "<group>"; };
 		0D1ACA09250A88720033007E /* Exchange Rates Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Exchange Rates Provider.swift"; sourceTree = "<group>"; };
 		0D1FCC5123FC5B4200CE9919 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
-		0D1FCC5323FC5B4B00CE9919 /* Data Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Manager.swift"; sourceTree = "<group>"; };
+		0D1FCC5323FC5B4B00CE9919 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		0D513B7423F19ABD00F82291 /* ExchangeRate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExchangeRate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D513B7723F19ABD00F82291 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D513B7923F19ABD00F82291 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,8 +49,6 @@
 		0DCF65232424F76F00A385DE /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		0DFB34AF2423A7CB007E8A49 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		0DFB34B12423A832007E8A49 /* ExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRate.swift; sourceTree = "<group>"; };
-		0DFB34B32423A8E4007E8A49 /* RemoteUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUrl.swift; sourceTree = "<group>"; };
-		0DFB34B52423A8ED007E8A49 /* LocalUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUrl.swift; sourceTree = "<group>"; };
 		0DFB34BB2423AE83007E8A49 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		0DFB34C02423AFF0007E8A49 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		0DFB34C22424241F007E8A49 /* Convertion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Convertion.swift; sourceTree = "<group>"; };
@@ -126,8 +122,6 @@
 				0DFB34C02423AFF0007E8A49 /* Observable.swift */,
 				0DFB34AF2423A7CB007E8A49 /* Currency.swift */,
 				0DFB34B12423A832007E8A49 /* ExchangeRate.swift */,
-				0DFB34B32423A8E4007E8A49 /* RemoteUrl.swift */,
-				0DFB34B52423A8ED007E8A49 /* LocalUrl.swift */,
 				0DFB34C22424241F007E8A49 /* Convertion.swift */,
 			);
 			path = Models;
@@ -164,7 +158,7 @@
 			children = (
 				0D1ACA09250A88720033007E /* Exchange Rates Provider.swift */,
 				0D1FCC5123FC5B4200CE9919 /* Converter.swift */,
-				0D1FCC5323FC5B4B00CE9919 /* Data Manager.swift */,
+				0D1FCC5323FC5B4B00CE9919 /* Storage.swift */,
 				0D1ACA07250A882C0033007E /* Network Service.swift */,
 				0D813B4E250AAB77000F97FC /* Factory.swift */,
 			);
@@ -243,7 +237,7 @@
 				0DCF65242424F76F00A385DE /* Coordinator.swift in Sources */,
 				0DFB34B02423A7CB007E8A49 /* Currency.swift in Sources */,
 				0DFB34BC2423AE83007E8A49 /* HomeViewModel.swift in Sources */,
-				0D1FCC5423FC5B4B00CE9919 /* Data Manager.swift in Sources */,
+				0D1FCC5423FC5B4B00CE9919 /* Storage.swift in Sources */,
 				0D087D322508F5250092BF4E /* HomeView.swift in Sources */,
 				0DFB34C32424241F007E8A49 /* Convertion.swift in Sources */,
 				0D1ACA08250A882C0033007E /* Network Service.swift in Sources */,
@@ -254,10 +248,8 @@
 				0D087D342508FA510092BF4E /* UIView Anchor Extension.swift in Sources */,
 				0D513B7823F19ABD00F82291 /* AppDelegate.swift in Sources */,
 				0D1ACA0A250A88720033007E /* Exchange Rates Provider.swift in Sources */,
-				0DFB34B62423A8ED007E8A49 /* LocalUrl.swift in Sources */,
 				0D513B7A23F19ABD00F82291 /* SceneDelegate.swift in Sources */,
 				0D1FCC5223FC5B4200CE9919 /* Converter.swift in Sources */,
-				0DFB34B42423A8E4007E8A49 /* RemoteUrl.swift in Sources */,
 				0D1ACA0625098BB00033007E /* CurrencySelectionViewController.swift in Sources */,
 				0DCF65222424F74E00A385DE /* MainCoordinator.swift in Sources */,
 				0D813B4F250AAB77000F97FC /* Factory.swift in Sources */,

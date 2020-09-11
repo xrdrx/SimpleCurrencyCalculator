@@ -19,6 +19,7 @@ protocol Factory {
     func makeNetworkService() -> NetworkService
     func makeExchangeRatesProvider() -> ExchangeRatesProvider
     func makeConverter() -> Converter
+    func makeExchangeRatesStorage() -> ExchangeRatesStorage
 }
 
 class DefaultFactory: Factory {
@@ -32,7 +33,8 @@ class DefaultFactory: Factory {
     func makeHomeViewModel() -> HomeViewModel {
         let provider = makeExchangeRatesProvider()
         let converter = makeConverter()
-        return HomeViewModel(ratesProvider: provider, converter: converter)
+        let storage = makeExchangeRatesStorage()
+        return HomeViewModel(ratesProvider: provider, converter: converter, storage: storage)
     }
     
     func makeHomeView() -> HomeView {
@@ -59,5 +61,9 @@ class DefaultFactory: Factory {
     
     func makeConverter() -> Converter {
         return Converter()
+    }
+    
+    func makeExchangeRatesStorage() -> ExchangeRatesStorage {
+        return DefaultExchangeRatesStorage()
     }
 }

@@ -9,18 +9,14 @@
 import Foundation
 
 protocol ExchangeRatesProvider {
-    var baseUrl: URL { get }
-    var networkService: NetworkService { get set }
-    
     func getExchangeRatesFor(currency: Currency, completion: @escaping (ExchangeRate) -> Void)
-    func getQueryItemsFor(currency: Currency) -> URLQueryItem
 }
 
 class ExchangeRatesApiIo: ExchangeRatesProvider {
     
-    let baseUrl: URL = URL(string: "https://api.exchangeratesapi.io/latest")!
-    let queryItemNameForSingleCurrency: String = "base"
-    var networkService: NetworkService
+    private let baseUrl: URL = URL(string: "https://api.exchangeratesapi.io/latest")!
+    private let queryItemNameForSingleCurrency: String = "base"
+    private let networkService: NetworkService
     
     init(networkService: NetworkService) {
         self.networkService = networkService
@@ -31,13 +27,12 @@ class ExchangeRatesApiIo: ExchangeRatesProvider {
         let url = networkService.getUrlWithQueryItems(url: baseUrl, queryItems: [queryItem])
         networkService.getDataFromUrl(url) { (data) in
             if let exchangeRate = try? JSONDecoder().decode(ExchangeRate.self, from: data) {
-                print("Got data for \(currency.rawValue)")
                 completion(exchangeRate)
             }
         }
     }
     
-    func getQueryItemsFor(currency: Currency) -> URLQueryItem {
+    private func getQueryItemsFor(currency: Currency) -> URLQueryItem {
         return URLQueryItem(name: queryItemNameForSingleCurrency, value: currency.rawValue)
     }
 }

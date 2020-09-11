@@ -10,7 +10,7 @@ import Foundation
 
 class HomeViewModel {
     var exchangeRates = ExchangeRates(rates: [:])
-    let manager = DataManager()
+    let storage: ExchangeRatesStorage
     let converter: Converter
     let exchangeRatesProvider: ExchangeRatesProvider
     
@@ -34,13 +34,12 @@ class HomeViewModel {
         }
     }
     
-    init(ratesProvider: ExchangeRatesProvider, converter: Converter) {
+    init(ratesProvider: ExchangeRatesProvider, converter: Converter, storage: ExchangeRatesStorage) {
         self.exchangeRatesProvider = ratesProvider
         self.converter = converter
-        self.exchangeRates = manager.loadLocalRates(from: exchangeRatesFileUrl)
-//        manager.loadRemoteRates(from: exchangeRatesRemoteUrl, for: Currency.allCases) { (rate) in
-//            self.exchangeRates.rates[rate.base] = rate
-//            print("Added \(rate.base) rates")
+        self.storage = storage
+        self.exchangeRates = storage.loadLocalExchangeRates()
+
         for currency in Currency.allCases {
             ratesProvider.getExchangeRatesFor(currency: currency) { (rate) in
                 self.exchangeRates.rates[rate.base] = rate
@@ -139,6 +138,6 @@ class HomeViewModel {
     }
     
     func saveRates() {
-        manager.saveRates(exchangeRates, to: exchangeRatesFileUrl)
+        storage.saveExchangeRates(exchangeRates)
     }
 }
